@@ -1,9 +1,9 @@
 from django.shortcuts import render
-
-from rest_framework import viewsets, permissions
+from rest_framework import permissions, viewsets
 
 from books.models import Book
 from books.serializers import BookSerializer
+
 
 class BooksViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
