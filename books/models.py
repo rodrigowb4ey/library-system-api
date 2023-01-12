@@ -25,7 +25,6 @@ class Publisher(models.Model):
 class Book(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=100)
-    cover = models.ImageField(upload_to='covers', null=True, blank=True)
     authors = models.ManyToManyField(Author)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, blank=True, null=True
@@ -40,6 +39,7 @@ class BookCopy(models.Model):
     date_published = models.DateField()
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
     publisher = models.ForeignKey(Publisher, on_delete=models.PROTECT)
+    cover = models.ImageField(upload_to='covers', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Book copies'

@@ -31,7 +31,7 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Book
-        fields = ['id', 'title', 'authors', 'cover', 'category']
+        fields = ['id', 'title', 'authors', 'category']
 
 
 class BookCopySerializer(serializers.HyperlinkedModelSerializer):
@@ -45,8 +45,5 @@ class BookCopySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = BookCopy
-        fields = ['id', 'book', 'date_published', 'publisher']
+        fields = ['id', 'book', 'date_published', 'publisher', 'cover']
         depth = 3
-
-    def get_title(self, object):
-        return object.__str__()
