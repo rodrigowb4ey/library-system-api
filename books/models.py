@@ -37,3 +37,6 @@ class BookCopy(models.Model):
     date_published = models.DateField()
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
     publisher = models.ForeignKey(Publisher, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.book.title} | {self.publisher.name} ({self.date_published})'
