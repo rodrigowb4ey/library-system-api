@@ -17,6 +17,7 @@ psycopg2-binary = "^2.9.5"
 isort = "^5.11.4"
 mkdocs = "^1.4.2"
 blue = "^0.9.1"
+django-extensions = "^3.2.1"
 
 [build-system]
 requires = ["poetry-core"]
