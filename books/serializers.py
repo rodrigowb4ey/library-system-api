@@ -39,6 +39,9 @@ class BookCopySerializer(serializers.HyperlinkedModelSerializer):
     publisher = serializers.SlugRelatedField(
         queryset=Publisher.objects.all(), slug_field='name'
     )
+    book = serializers.HyperlinkedRelatedField(
+        view_name='book-detail', queryset=Book.objects.all()
+    )
 
     class Meta:
         model = BookCopy
