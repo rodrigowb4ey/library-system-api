@@ -8,6 +8,9 @@ from authors.models import Author
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def __str__(self):
         return f'{self.name}'
 
@@ -37,6 +40,9 @@ class BookCopy(models.Model):
     date_published = models.DateField()
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
     publisher = models.ForeignKey(Publisher, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name_plural = 'Book copies'
 
     def __str__(self):
         return f'{self.book.title} | {self.publisher.name} ({self.date_published})'
