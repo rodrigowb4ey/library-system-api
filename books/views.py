@@ -34,3 +34,9 @@ class BooksViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(copies, many=True)
 
         return Response(serializer.data)
+
+
+class BookCopyViewSet(viewsets.ModelViewSet):
+    queryset = BookCopy.objects.all()
+    serializer_class = BookCopySerializer
+    permission_classes = [permissions.IsAuthenticated]

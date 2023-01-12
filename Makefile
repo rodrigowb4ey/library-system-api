@@ -6,5 +6,5 @@ format:
 	@isort .
 	@blue .
 lint:
-	@blue . --check
 	@isort . --check
+	@blue . --check
