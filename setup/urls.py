@@ -20,12 +20,13 @@ from django.urls import include, path
 from rest_framework import routers
 
 from authors.views import AuthorViewSet
-from books.views import BooksViewSet, CategoryViewSet
+from books.views import BooksViewSet, CategoryViewSet, PublisherViewSet
 
 router = routers.DefaultRouter()
 router.register(r'books', BooksViewSet)
 router.register(r'authors', AuthorViewSet)
 router.register(r'categories', CategoryViewSet)
+router.register(r'publishers', PublisherViewSet)
 
 urlpatterns = (
     [

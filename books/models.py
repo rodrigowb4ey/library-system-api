@@ -12,6 +12,13 @@ class Category(models.Model):
         return f'{self.name}'
 
 
+class Publisher(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 class Book(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=100)
@@ -23,3 +30,10 @@ class Book(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+
+class BookCopy(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    date_published = models.DateField()
+    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    publisher = models.ForeignKey(Publisher, on_delete=models.PROTECT)
