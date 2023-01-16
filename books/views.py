@@ -11,12 +11,13 @@ from books.serializers import (
     CategorySerializer,
     PublisherSerializer,
 )
+from utils.api_permissions import APIPermission
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [APIPermission]
     filter_backends = [DjangoFilterBackend, restfilters.SearchFilter]
     filterset_fields = ['id', 'name']
     search_fields = ['name']
@@ -25,7 +26,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class PublisherViewSet(viewsets.ModelViewSet):
     queryset = Publisher.objects.all()
     serializer_class = PublisherSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [APIPermission]
     filter_backends = [DjangoFilterBackend, restfilters.SearchFilter]
     filterset_fields = ['id', 'name']
     search_fields = ['name']
@@ -34,7 +35,7 @@ class PublisherViewSet(viewsets.ModelViewSet):
 class BooksViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [APIPermission]
     filter_backends = [DjangoFilterBackend, restfilters.SearchFilter]
     filterset_fields = ['id', 'title', 'authors', 'category']
     search_fields = ['title', 'authors__name']
@@ -50,7 +51,7 @@ class BooksViewSet(viewsets.ModelViewSet):
 class BookCopyViewSet(viewsets.ModelViewSet):
     queryset = BookCopy.objects.all()
     serializer_class = BookCopySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [APIPermission]
 
     filter_backends = [DjangoFilterBackend, restfilters.SearchFilter]
     filterset_fields = ['id', 'book', 'date_published', 'publisher']
