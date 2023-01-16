@@ -28,6 +28,10 @@ from books.views import (
 )
 
 router = routers.DefaultRouter()
+
+router.get_api_root_view().cls.__name__ = 'Library System'
+router.get_api_root_view().cls.__doc__ = 'API Root View'
+
 router.register(r'books', BooksViewSet)
 router.register(r'authors', AuthorViewSet)
 router.register(r'categories', CategoryViewSet)
