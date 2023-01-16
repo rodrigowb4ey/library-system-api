@@ -157,6 +157,17 @@ django = ">=3.0"
 pytz = "*"
 
 [[package]]
+name = "drf-flex-fields"
+version = "1.0.0"
+description = "Flexible, dynamic fields and nested resources for Django REST Framework serializers."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "drf-flex-fields-1.0.0.tar.gz", hash = "sha256:e3e823386ac0103307d6fb0812ee39a443ece0e0f90a649e1cc739462499335d"},
+]
+
+[[package]]
 name = "flake8"
 version = "4.0.1"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -769,4 +780,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "349439cf03dfb6a954492b056851c87a177f6b3671aef80a1d09aba0f29e08e3"
+content-hash = "2b14d193d3240e10cb6d358b91cbe79f628783dcb383a0ec09f666be8b574eb9"
