@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django_filters',
     'rest_framework',
     'books',
     'authors',
@@ -89,6 +90,16 @@ DATABASES = {
         'HOST': os.environ.get('SQL_HOST', 'localhost'),
         'PORT': os.environ.get('SQL_PORT', '5432'),
     }
+}
+
+# Django REST Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
 }
 
 
