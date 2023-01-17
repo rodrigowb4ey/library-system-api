@@ -13,11 +13,12 @@ pillow = "^9.4.0"
 psycopg2-binary = "^2.9.5"
 drf-flex-fields = "^1.0.0"
 django-filter = "^22.1"
+drf-spectacular = "^0.25.1"
+mkdocs = "^1.4.2"
 
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.11.4"
-mkdocs = "^1.4.2"
 blue = "^0.9.1"
 django-extensions = "^3.2.1"
 

@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
 
 from authors.views import AuthorViewSet
@@ -30,7 +31,7 @@ from books.views import (
 router = routers.DefaultRouter()
 
 router.get_api_root_view().cls.__name__ = 'Library System'
-router.get_api_root_view().cls.__doc__ = 'API Root View'
+router.get_api_root_view().cls.__doc__ = 'Browsable API Root View'
 
 router.register(r'books', BooksViewSet)
 router.register(r'authors', AuthorViewSet)
@@ -40,8 +41,14 @@ router.register(r'book_copies', BookCopyViewSet)
 
 urlpatterns = (
     [
-        path('', include(router.urls)),
         path('admin/', admin.site.urls),
+        path('api/', include(router.urls)),
+        path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+        path(
+            'api/schema/swagger-ui/',
+            SpectacularSwaggerView.as_view(url_name='schema'),
+            name='swagger-ui',
+        ),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)
