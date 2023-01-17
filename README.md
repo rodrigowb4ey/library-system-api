@@ -26,4 +26,3 @@ docker compose up
 ## Author
 
 - Rodrigo Bezerra Saraiva
-- Frontend Mentor - [@rodrigowb4ey](https://www.frontendmentor.io/profile/rodrigowb4ey)
