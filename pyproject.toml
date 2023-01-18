@@ -22,6 +22,10 @@ pytest-django = "^4.5.2"
 isort = "^5.11.4"
 blue = "^0.9.1"
 django-extensions = "^3.2.1"
+pytest-mock = "^3.10.0"
+requests-mock = "^1.10.0"
+django-mock-queries = "^2.1.7"
+pytest-cov = "^4.0.0"
 
 [tool.isort]
 profile = "black"
@@ -29,6 +33,7 @@ line_length = 79
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "setup.settings"
+python_files = "tests.py test_*.py *_tests.py"
 testpaths = [
     "tests",
 ]
