@@ -26,6 +26,7 @@ pytest-mock = "^3.10.0"
 requests-mock = "^1.10.0"
 django-mock-queries = "^2.1.7"
 pytest-cov = "^4.0.0"
+factory-boy = "^3.2.1"
 
 [tool.isort]
 profile = "black"
