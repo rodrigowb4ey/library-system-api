@@ -1,5 +1,3 @@
-import json
-
 import pytest
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -113,13 +111,10 @@ class TestAuthorEndpoint:
         assert response.status_code == HTTP_403_FORBIDDEN
 
     def test_put_author_authenticated_admin_user(self):
-        author = AuthorFactory()
         self.client.force_authenticate(self.admin_user)
-        request_data = dict(name='Dohn Joe')
+        author = AuthorFactory()
         url = reverse('author-detail', kwargs={'pk': author.pk})
-        response = self.client.put(
-            url, content_type='application/json', data=json.dumps(request_data)
-        )
+        response = self.client.put(url, data={'name': 'Dohn Joe'})
         assert response.status_code == HTTP_200_OK
         assert response.data['id'] == str(author.pk)
         assert response.data['name'] == 'Dohn Joe'
@@ -127,11 +122,8 @@ class TestAuthorEndpoint:
     def test_put_author_authenticated_super_user(self):
         author = AuthorFactory()
         self.client.force_authenticate(self.super_user)
-        request_data = dict(name='Dohn Joe')
         url = reverse('author-detail', kwargs={'pk': author.pk})
-        response = self.client.put(
-            url, content_type='application/json', data=json.dumps(request_data)
-        )
+        response = self.client.put(url, data={'name': 'Dohn Joe'})
         assert response.status_code == HTTP_200_OK
         assert response.data['id'] == str(author.pk)
         assert response.data['name'] == 'Dohn Joe'
@@ -156,11 +148,8 @@ class TestAuthorEndpoint:
     def test_patch_author_authenticated_admin_user(self):
         author = AuthorFactory()
         self.client.force_authenticate(self.admin_user)
-        request_data = dict(name='Dohn Joe')
         url = reverse('author-detail', kwargs={'pk': author.pk})
-        response = self.client.patch(
-            url, content_type='application/json', data=json.dumps(request_data)
-        )
+        response = self.client.patch(url, data={'name': 'Dohn Joe'})
         assert response.status_code == HTTP_200_OK
         assert response.data['id'] == str(author.pk)
         assert response.data['name'] == 'Dohn Joe'
@@ -168,11 +157,8 @@ class TestAuthorEndpoint:
     def test_patch_author_authenticated_super_user(self):
         author = AuthorFactory()
         self.client.force_authenticate(self.super_user)
-        request_data = dict(name='Dohn Joe')
         url = reverse('author-detail', kwargs={'pk': author.pk})
-        response = self.client.patch(
-            url, content_type='application/json', data=json.dumps(request_data)
-        )
+        response = self.client.patch(url, data={'name': 'Dohn Joe'})
         assert response.status_code == HTTP_200_OK
         assert response.data['id'] == str(author.pk)
         assert response.data['name'] == 'Dohn Joe'
