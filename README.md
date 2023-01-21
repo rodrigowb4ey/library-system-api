@@ -3,11 +3,22 @@
 ## Table of contents
 
 - [Overview](#overview)
+    - [Screenshots](#screenshots)
 - [Built With](#built-with)
 - [Project Setup](#project-setup)
 - [Author](#author)
 
 ## Overview
+
+### Screenshots
+
+'/api/'
+
+![](./utils/root_api_overview.png)
+
+'/api/schema/swagger-ui/'
+
+![](./utils/swagger_ui.png)
 
 ### Built with
 
