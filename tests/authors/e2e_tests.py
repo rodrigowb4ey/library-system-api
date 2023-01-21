@@ -1,12 +1,17 @@
+import json
+
 import pytest
 from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
     HTTP_403_FORBIDDEN,
 )
 from rest_framework.test import APIClient
+
+from authors.models import Author
 
 from .factories import AuthorFactory
 
@@ -89,3 +94,114 @@ class TestAuthorEndpoint:
         response = self.client.post(self.url, {'name': 'John Doe'})
         assert response.status_code == HTTP_201_CREATED
         assert response.data['name'] == 'John Doe'
+
+    def test_put_author_unauthenticated(self):
+        author = AuthorFactory()
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.put(
+            url, content_type='application/json', data={'name': 'Dohn Joe'}
+        )
+        assert response.status_code == HTTP_403_FORBIDDEN
+
+    def test_put_author_authenticated_common_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.common_user)
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.put(
+            url, content_type='application/json', data={'name': 'Dohn Joe'}
+        )
+        assert response.status_code == HTTP_403_FORBIDDEN
+
+    def test_put_author_authenticated_admin_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.admin_user)
+        request_data = dict(name='Dohn Joe')
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.put(
+            url, content_type='application/json', data=json.dumps(request_data)
+        )
+        assert response.status_code == HTTP_200_OK
+        assert response.data['id'] == str(author.pk)
+        assert response.data['name'] == 'Dohn Joe'
+
+    def test_put_author_authenticated_super_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.super_user)
+        request_data = dict(name='Dohn Joe')
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.put(
+            url, content_type='application/json', data=json.dumps(request_data)
+        )
+        assert response.status_code == HTTP_200_OK
+        assert response.data['id'] == str(author.pk)
+        assert response.data['name'] == 'Dohn Joe'
+
+    def test_patch_author_unauthenticated(self):
+        author = AuthorFactory()
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.patch(
+            url, content_type='application/json', data={'name': 'Dohn Joe'}
+        )
+        assert response.status_code == HTTP_403_FORBIDDEN
+
+    def test_patch_author_authenticated_common_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.common_user)
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.patch(
+            url, content_type='application/json', data={'name': 'Dohn Joe'}
+        )
+        assert response.status_code == HTTP_403_FORBIDDEN
+
+    def test_patch_author_authenticated_admin_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.admin_user)
+        request_data = dict(name='Dohn Joe')
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.patch(
+            url, content_type='application/json', data=json.dumps(request_data)
+        )
+        assert response.status_code == HTTP_200_OK
+        assert response.data['id'] == str(author.pk)
+        assert response.data['name'] == 'Dohn Joe'
+
+    def test_patch_author_authenticated_super_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.super_user)
+        request_data = dict(name='Dohn Joe')
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.patch(
+            url, content_type='application/json', data=json.dumps(request_data)
+        )
+        assert response.status_code == HTTP_200_OK
+        assert response.data['id'] == str(author.pk)
+        assert response.data['name'] == 'Dohn Joe'
+
+    def test_delete_author_unauthenticated(self):
+        author = AuthorFactory()
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.delete(url)
+        assert response.status_code == HTTP_403_FORBIDDEN
+
+    def test_delete_author_authenticated_common_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.common_user)
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.delete(url)
+        assert response.status_code == HTTP_403_FORBIDDEN
+
+    def test_delete_author_authenticated_admin_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.admin_user)
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.delete(url)
+        assert response.status_code == HTTP_204_NO_CONTENT
+        assert not Author.objects.filter(pk=author.pk).exists()
+
+    def test_delete_author_authenticated_super_user(self):
+        author = AuthorFactory()
+        self.client.force_authenticate(self.super_user)
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.delete(url)
+        assert response.status_code == HTTP_204_NO_CONTENT
+        assert not Author.objects.filter(pk=author.pk).exists()
