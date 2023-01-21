@@ -8,6 +8,8 @@ from rest_framework.status import (
 )
 from rest_framework.test import APIClient
 
+from .factories import AuthorFactory
+
 
 @pytest.mark.django_db
 class TestAuthorEndpoint:
@@ -19,11 +21,16 @@ class TestAuthorEndpoint:
             email='superuser@example.com',
             password='password',
         )
-        self.admin_user = User.objects.create(
+        self.admin_user = User.objects.create_user(
             username='admin',
             email='admin@example.com',
             password='password',
             is_staff=True,
+        )
+        self.common_user = User.objects.create_user(
+            username='nonadmin',
+            email='nonadmin@example.com',
+            password='password',
         )
 
     def test_get_authors_unauthenticated(self):
@@ -35,7 +42,7 @@ class TestAuthorEndpoint:
         )  # Assumes initial state is an empty list
 
     def test_get_authors_authenticated(self):
-        self.client.force_authenticate(self.admin_user)
+        self.client.force_authenticate(self.common_user)
         response = self.client.get(self.url)
         data = response.json()
         assert response.status_code == HTTP_200_OK
@@ -43,17 +50,31 @@ class TestAuthorEndpoint:
             len(data['results']) == 0
         )  # Assumes initial state is an empty list
 
+    def test_get_author_by_id_unauthenticated(self):
+        author = AuthorFactory()
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.get(url)
+        data = response.json()
+        assert response.status_code == HTTP_200_OK
+        assert data['id'] == str(author.pk)
+        assert data['name'] == author.name
+
+    def test_get_author_by_id_authenticated(self):
+        self.client.force_authenticate(self.common_user)
+        author = AuthorFactory()
+        url = reverse('author-detail', kwargs={'pk': author.pk})
+        response = self.client.get(url)
+        data = response.json()
+        assert response.status_code == HTTP_200_OK
+        assert data['id'] == str(author.pk)
+        assert data['name'] == author.name
+
     def test_post_author_unauthenticated(self):
         response = self.client.post(self.url, {'name': 'John Doe'})
         assert response.status_code == HTTP_403_FORBIDDEN
 
-    def test_post_author_authenticated_not_admin_or_superuser(self):
-        user = User.objects.create_user(
-            username='nonadmin',
-            email='nonadmin@example.com',
-            password='password',
-        )
-        self.client.force_authenticate(user)
+    def test_post_author_authenticated_common_user(self):
+        self.client.force_authenticate(self.common_user)
         response = self.client.post(self.url, {'name': 'John Doe'})
         assert response.status_code == HTTP_403_FORBIDDEN
 
