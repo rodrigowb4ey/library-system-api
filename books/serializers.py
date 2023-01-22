@@ -1,3 +1,4 @@
+from drf_extra_fields.fields import HybridImageField
 from rest_flex_fields import FlexFieldsModelSerializer
 from rest_framework import serializers
 
@@ -33,6 +34,7 @@ class BookCopySerializer(FlexFieldsModelSerializer):
     publisher = serializers.SlugRelatedField(
         queryset=Publisher.objects.all(), slug_field='name'
     )
+    cover = HybridImageField()
 
     class Meta:
         model = BookCopy

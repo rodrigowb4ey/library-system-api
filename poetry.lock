@@ -385,6 +385,25 @@ django = ">=3.0"
 pytz = "*"
 
 [[package]]
+name = "drf-extra-fields"
+version = "3.4.1"
+description = "Additional fields for Django Rest Framework."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "drf-extra-fields-3.4.1.tar.gz", hash = "sha256:54df0bef56c38ec7efb40e146ada42fa734b5087e45e9e54b2fd23baccc41466"},
+    {file = "drf_extra_fields-3.4.1-py3-none-any.whl", hash = "sha256:a11aeecc85847b0acda6ce57bb144c584c8ebb43ecdf989d8caa7bb130090885"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+djangorestframework = ">=3.9.2"
+
+[package.extras]
+base64imagefield = ["Pillow (>=6.2.1)"]
+
+[[package]]
 name = "drf-flex-fields"
 version = "1.0.0"
 description = "Flexible, dynamic fields and nested resources for Django REST Framework serializers."
@@ -1373,4 +1392,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "21d40356c8531ed86e44445c4c2523e09c3fcd9daf97eabc079ac05600bb6f39"
+content-hash = "7c7742fbcbb22be6bf5f424f09800efc8d32b9946996ef1fe735f55cdc1ae984"
